@@ -24,7 +24,7 @@ public class ProdutoCreateDto {
 	private String tipoProduto;
 
 	@NotNull(message = "Campo \"Valor no Fornecedor\" não pode ser nulo.")
-	@Min(value = 0L, message = "Campo \"valorFornecedor\" precisa ser maior ou igual à 0.")
+	@Min(value = 0L, message = "Campo \"Valor no Fornecedor\" precisa ser maior ou igual à 0.")
 	private Double valorFornecedor;
 
 	@Min(value = 0L, message = "Campo \"Quantidade em Estoque\" precisa ser maior ou igual à 0.")

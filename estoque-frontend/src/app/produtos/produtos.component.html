@@ -1,7 +1,6 @@
 <!-- Opções de Pesquisa -->
 <div class="container">
-  <div class="columns is-desktop">
-    <div class="column is-1"></div>
+  <div class="columns is-justify-content-center m-4">
     <div class="column is-5">
       <div class="field is-horizontal">
         <div class="field-label is-normal">
@@ -62,15 +61,12 @@
         </div>
       </div>
     </div>
-    <div class="column is-1"></div>
   </div>
 
   <!-- Tabelas -->
-  <div class="columns is-desktop" [ngSwitch]="opcaoSelecionada">
-    <div class="column is-1"></div>
+  <div class="columns is-justify-content-center m-4" [ngSwitch]="opcaoSelecionada">
 
     <!-- Opção 1: Pesquisa por Produtos -->
-
     <ng-template [ngSwitchCase]="1">
       <div class="column is-centered is-10 table-container box is-scrollable">
         <table class="table is-striped is-hoverable is-fullwidth" aria-describedby="Tabela de Produtos">
@@ -197,12 +193,10 @@
         </table>
       </div>
     </ng-template>
-    <div class="column is-1"></div>
   </div>
 
   <!-- Botões -->
-  <div class="columns is-desktop">
-    <div class="column is-1"></div>
+  <div class="columns is-justify-content-center m-4">
     <div class="column is-fullwidth is-10">
       <div class="buttons is-justify-content-flex-end">
         <button class="button is-success" type="button" (click)="cadastrar()">
@@ -234,7 +228,6 @@
       </div>
     </div>
   </div>
-  <div class="column is-1"></div>
 </div>
 
 <!-- Modal de alerta -->
