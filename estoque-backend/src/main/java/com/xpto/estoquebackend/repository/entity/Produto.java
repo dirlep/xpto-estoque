@@ -7,8 +7,19 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "tb_produto")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Produto implements Serializable {
 	
 	private static final long serialVersionUID = -5758906377980934308L;
@@ -31,63 +42,4 @@ public class Produto implements Serializable {
 
 	private Integer quantidadeSaida;
 	
-	public Produto() {}
-
-	public Produto(Long codigo, String descricao, String tipoProduto, Double valorFornecedor, Integer quantidadeEstoque,
-			Integer quantidadeSaida) {
-		this.codigo = codigo;
-		this.descricao = descricao;
-		this.tipoProduto = tipoProduto;
-		this.valorFornecedor = valorFornecedor;
-		this.quantidadeEstoque = quantidadeEstoque;
-		this.quantidadeSaida = quantidadeSaida;
-	}
-
-	public Long getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public String getTipoProduto() {
-		return tipoProduto;
-	}
-
-	public void setTipoProduto(String tipoProduto) {
-		this.tipoProduto = tipoProduto;
-	}
-
-	public Double getValorFornecedor() {
-		return valorFornecedor;
-	}
-
-	public void setValorFornecedor(Double valorFornecedor) {
-		this.valorFornecedor = valorFornecedor;
-	}
-
-	public Integer getQuantidadeEstoque() {
-		return quantidadeEstoque;
-	}
-
-	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
-		this.quantidadeEstoque = quantidadeEstoque;
-	}
-
-	public Integer getQuantidadeSaida() {
-		return quantidadeSaida;
-	}
-
-	public void setQuantidadeSaida(Integer quantidadeSaida) {
-		this.quantidadeSaida = quantidadeSaida;
-	}
 }

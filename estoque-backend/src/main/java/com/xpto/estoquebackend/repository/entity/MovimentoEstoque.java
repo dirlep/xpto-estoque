@@ -11,8 +11,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "tb_estoque")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MovimentoEstoque implements Serializable {
 
 	private static final long serialVersionUID = 1061025859415658239L;
@@ -36,66 +47,5 @@ public class MovimentoEstoque implements Serializable {
 
 	@Column(nullable = false)
 	private Integer quantidadeMovimentada;
-
-	public MovimentoEstoque() {
-	}
-
-	public MovimentoEstoque(Long id, Produto produto, String tipoMovimentacao, Double valorVenda,
-			String dataMovimentacao, Integer quantidadeMovimentada) {
-		this.id = id;
-		this.produto = produto;
-		this.tipoMovimentacao = tipoMovimentacao;
-		this.valorVenda = valorVenda;
-		this.dataMovimentacao = dataMovimentacao;
-		this.quantidadeMovimentada = quantidadeMovimentada;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Produto getProduto() {
-		return produto;
-	}
-
-	public void setProduto(Produto produto) {
-		this.produto = produto;
-	}
-
-	public String getTipoMovimentacao() {
-		return tipoMovimentacao;
-	}
-
-	public void setTipoMovimentacao(String tipoMovimentacao) {
-		this.tipoMovimentacao = tipoMovimentacao;
-	}
-
-	public Double getValorVenda() {
-		return valorVenda;
-	}
-
-	public void setValorVenda(Double valorVenda) {
-		this.valorVenda = valorVenda;
-	}
-
-	public String getDataMovimentacao() {
-		return dataMovimentacao;
-	}
-
-	public void setDataMovimentacao(String dataMovimentacao) {
-		this.dataMovimentacao = dataMovimentacao;
-	}
-
-	public Integer getQuantidadeMovimentada() {
-		return quantidadeMovimentada;
-	}
-
-	public void setQuantidadeMovimentada(Integer quantidadeMovimentada) {
-		this.quantidadeMovimentada = quantidadeMovimentada;
-	}
 
 }
