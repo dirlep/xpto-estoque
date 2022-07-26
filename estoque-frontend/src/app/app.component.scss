@@ -1,0 +1,112 @@
+$primary-color: #48c78e;
+$secondary-color: #FFF;
+$font-color: #221C35;
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 8px 0;
+  color: $font-color;
+}
+
+p {
+  margin: 0;
+  color: $font-color;
+}
+
+.navbar {
+  margin-bottom: 35px;
+}
+
+.company-title {
+  font-size: 20px;
+}
+
+.content {
+  display: flex;
+  margin: 25px auto 32px;
+  padding: 0 16px;
+  max-width: 960px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-small {
+  all: unset;
+  border-radius: 4px;
+  margin: 16px 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  line-height: 24px;
+  background-color: $primary-color;
+  color: $secondary-color;
+  font-weight: 600;
+  border: none;
+  min-width: 30%;
+  position: relative;
+  height: 16px;
+  width: 168px;
+}
+
+.card-small span {
+  margin-left: 60px;
+}
+
+.material-icons-round {
+  font-size: 48px;
+  padding-right: 10px;
+}
+
+.content img {
+  border-radius: 8px;
+}
+
+.input-search {
+  font-size: 25px;
+}
+
+svg#rocket {
+  width: 80px;
+  position: absolute;
+  left: -10px;
+  top: -24px;
+}
+
+.table-container {
+  overflow-y: scroll;
+  max-height: 600px;
+  margin-top: 15px;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background-color: rgb(233, 233, 233);
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(95, 95, 95, 0.3);
+}
+
+.buttons svg {
+  padding-right: 3px;
+}
+
+figure img {
+	opacity: 1;
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
+figure:hover img {
+	opacity: .7;
+}
