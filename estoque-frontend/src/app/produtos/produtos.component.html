@@ -1,3 +1,446 @@
-<p>
-  produtos works!
-</p>
+<!-- Opções de Pesquisa -->
+<div class="container">
+  <div class="columns is-desktop">
+    <div class="column is-1"></div>
+    <div class="column is-5">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Pesquisar</label>
+        </div>
+        <div class="field-body">
+          <div class="field is-normal">
+            <div class="control">
+              <div class="select is-fullwidth">
+                <select id="selectProduto" aria-label="Selecionar o tipo de pesquisa" (change)="selecionarItem($event)">
+                  <option value="1" selected>Produtos</option>
+                  <option value="2">Tipo de Produto</option>
+                  <option value="3">Lucro</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-5" *ngIf="opcaoSelecionada === '2'">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Tipo de Produto</label>
+        </div>
+        <div class="field-body">
+          <div class="field is-normal">
+            <div class="control">
+              <div class="select is-fullwidth">
+                <select id="selectTipo" aria-label="Selecionar o tipo de produto"
+                  (change)="selecionarTipoProduto($event)">
+                  <option value="Eletrônico" selected>Eletrônico</option>
+                  <option value="Eletrodoméstico">Eletrodoméstico</option>
+                  <option value="Móvel">Móvel</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-5" *ngIf="opcaoSelecionada !== '2'">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Código</label>
+        </div>
+        <div class="field-body">
+          <div class="field has-addons">
+            <div class="control is-expanded">
+              <input class="input" type="number" (change)="selecionarCodigo($event)" [min]="0">
+            </div>
+            <div class="control">
+              <a class="button is-link" (click)="buscarProdutoPorCodigo()">
+                Pesquisar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-1"></div>
+  </div>
+
+  <!-- Tabelas -->
+  <div class="columns is-desktop" [ngSwitch]="opcaoSelecionada">
+    <div class="column is-1"></div>
+
+    <!-- Opção 1: Pesquisa por Produtos -->
+
+    <ng-template [ngSwitchCase]="1">
+      <div class="column is-centered is-10 table-container box is-scrollable">
+        <table class="table is-striped is-hoverable is-fullwidth" aria-describedby="Tabela de Produtos">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Código</th>
+              <th scope="col">Descrição</th>
+              <th scope="col">Tipo de Produto</th>
+              <th scope="col">Valor Fornecedor</th>
+              <th scope="col">Quantidade Estoque</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of dsProdutos">
+              <td>
+                <input class="form-check-input mt-0 align-middle" type="radio" id="idRadio" name="nmRadio"
+                  aria-label="Radio button para um item da lista de produtos" (change)="selecionarProduto(item)">
+              </td>
+              <th scope="row">{{ item.codigo }}</th>
+              <td>{{ item.descricao }}</td>
+              <td>{{ item.tipoProduto }}</td>
+              <td>{{ "R$ " + item.valorFornecedor?.toFixed(2) }}</td>
+              <td>{{ item.quantidadeEstoque }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
+
+    <!-- Opção 2: Pesquisa por Tipo de Produto -->
+    <ng-template [ngSwitchCase]="2">
+      <div class="column is-centered is-10 table-container box is-scrollable">
+        <table class="table is-striped is-hoverable is-fullwidth" aria-describedby="Tabela de Produtos">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Código</th>
+              <th scope="col">Descrição</th>
+              <th scope="col">Tipo de Produto</th>
+              <th scope="col">Quantidade Estoque</th>
+              <th scope="col">Quantidade Saída</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of dsProdutosTipo">
+              <td>
+                <input class="form-check-input mt-0 align-middle" type="radio" id="idRadio" name="nmRadio"
+                  aria-label="Radio button para um item da lista de produtos"
+                  (change)="selecionarProduto(dsProdutoCodigo)">
+              </td>
+              <th scope="row">{{ item.codigo }}</th>
+              <td>{{ item.descricao }}</td>
+              <td>{{ item.tipoProduto }}</td>
+              <td>{{ item.quantidadeEstoque }}</td>
+              <td>{{ item.quantidadeSaida }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
+
+    <!-- Opção 3: Pesquisa por Lucro -->
+    <ng-template [ngSwitchCase]="3">
+      <div class="column is-centered is-10 table-container box is-scrollable">
+        <table class="table is-striped is-hoverable is-fullwidth" aria-describedby="Tabela de Produtos">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Código</th>
+              <th scope="col">Descrição</th>
+              <th scope="col">Tipo de Produto</th>
+              <th scope="col">Quantidade Estoque</th>
+              <th scope="col">Quantidade Saída</th>
+              <th scope="col">Lucro Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of dsProdutosLucro">
+              <td>
+                <input class="form-check-input mt-0 align-middle" type="radio" id="idRadio" name="nmRadio"
+                  aria-label="Radio button para um item da lista de produtos" (change)="selecionarProduto(item)">
+              </td>
+              <th scope="row">{{ item.codigo }}</th>
+              <td>{{ item.descricao }}</td>
+              <td>{{ item.tipoProduto }}</td>
+              <td>{{ item.quantidadeEstoque }}</td>
+              <td>{{ item.quantidadeSaida }}</td>
+              <td>{{ "R$ " + item.totalLucro?.toFixed(2) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
+
+    <!-- Opção 4: Pesquisa por Código -->
+    <ng-template [ngSwitchCase]="4" *ngIf="mostrarTabela">
+      <div class="column is-centered is-10 table-container box is-scrollable">
+        <table class="table is-striped is-hoverable is-fullwidth" aria-describedby="Tabela de Produtos">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Código</th>
+              <th scope="col">Descrição</th>
+              <th scope="col">Tipo de Produto</th>
+              <th scope="col">Valor Fornecedor</th>
+              <th scope="col">Quantidade Estoque</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input class="form-check-input mt-0 align-middle" type="radio" id="idRadio" name="nmRadio"
+                  aria-label="Radio button para um item da lista de produtos"
+                  (change)="selecionarProduto(dsProdutoCodigo)">
+              </td>
+              <th scope="row">{{ dsProdutoCodigo.codigo }}</th>
+              <td>{{ dsProdutoCodigo.descricao }}</td>
+              <td>{{ dsProdutoCodigo.tipoProduto }}</td>
+              <td>{{ "R$ " + dsProdutoCodigo.valorFornecedor?.toFixed(2) }}</td>
+              <td>{{ dsProdutoCodigo.quantidadeEstoque }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
+    <div class="column is-1"></div>
+  </div>
+
+  <!-- Botões -->
+  <div class="columns is-desktop">
+    <div class="column is-1"></div>
+    <div class="column is-fullwidth is-10">
+      <div class="buttons is-justify-content-flex-end">
+        <button class="button is-success" type="button" (click)="cadastrar()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+            <path
+              d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+          </svg>
+          Cadastrar
+        </button>
+        <button class="button is-warning" type="button" (click)="alterar()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
+            viewBox="0 0 16 16">
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+            <path fill-rule="evenodd"
+              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+          </svg>
+          Alterar
+        </button>
+        <button class="button is-danger" type="button" (click)="deletar()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill"
+            viewBox="0 0 16 16">
+            <path
+              d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+          </svg>
+          Remover
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="column is-1"></div>
+</div>
+
+<!-- Modal de alerta -->
+<div class="modal" id="modal-alerta">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title"> Aviso </p>
+      <button class="delete" aria-label="close" (click)="fecharModal('modal-alerta')"></button>
+    </header>
+
+    <section class="modal-card-body">
+      {{ msgModal }}
+    </section>
+
+    <footer class="modal-card-foot is-justify-content-flex-end">
+      <button class="button is-link" (click)="fecharModal('modal-alerta')">Ok</button>
+    </footer>
+  </div>
+</div>
+
+<!-- Modal para cadastrar produtos -->
+<div *ngIf="mostrarModal">
+  <div class="modal" id="modal-cadastrar">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Cadastrar Produto</p>
+        <button class="delete" aria-label="close" (click)="fecharModal('modal-cadastrar')"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Código</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input class="input" type="number" [(ngModel)]="produtoCadastro.codigo">
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Descrição</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input class="input" type="text" [(ngModel)]="produtoCadastro.descricao">
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Tipo de Produto</label>
+          </div>
+          <div class="field-body">
+            <div class="field is-normal">
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select [(ngModel)]="produtoCadastro.tipoProduto">
+                    <option value="Eletrônico">Eletrônico</option>
+                    <option value="Eletrodoméstico">Eletrodoméstico</option>
+                    <option value="Móvel">Móvel</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Valor Fornecedor</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input class="input" type="number" [(ngModel)]="produtoCadastro.valorFornecedor">
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success" (click)="cadastrarProduto()">Cadastrar</button>
+        <button class="button" (click)="fecharModal('modal-cadastrar')">Cancelar</button>
+      </footer>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para alterar produto-->
+<div *ngIf="mostrarModal">
+  <div class="modal" id="modal-alterar">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Alterar Produto</p>
+        <button class="delete" aria-label="close" (click)="fecharModal('modal-alterar')"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Código</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input class="input" type="number" [disabled]="true" [value]="produtoSelecionado.codigo">
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Descrição</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input class="input" type="text" [(ngModel)]="produtoSelecionado.descricao">
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Tipo de Produto</label>
+          </div>
+          <div class="field-body">
+            <div class="field is-normal">
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select [(ngModel)]="produtoSelecionado.tipoProduto">
+                    <option value="Eletrônico">Eletrônico</option>
+                    <option value="Eletrodoméstico">Eletrodoméstico</option>
+                    <option value="Móvel">Móvel</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Valor Fornecedor</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input class="input" type="number" [(ngModel)]="produtoSelecionado.valorFornecedor">
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success" (click)="alterarProduto()">Alterar</button>
+        <button class="button" (click)="fecharModal('modal-alterar')">Cancelar</button>
+      </footer>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para remover produto -->
+<div *ngIf="mostrarModal">
+  <div class="modal" id="modal-deletar">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Remover Produto</p>
+        <button class="delete" aria-label="close" (click)="fecharModal('modal-deletar')"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Código</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input class="input" type="number" [disabled]="true" [value]="produtoSelecionado.codigo">
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Descrição</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input class="input" type="text" [disabled]="true" [value]="produtoSelecionado.descricao">
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success" (click)="deletarProduto()">Remover Produto</button>
+        <button class="button" (click)="fecharModal('modal-deletar')">Cancelar</button>
+      </footer>
+    </div>
+  </div>
+</div>
