@@ -1,3 +1,83 @@
-<p>
-  estoque works!
-</p>
+<div class="container">
+  <div class="columns is-desktop">
+    <div class="column is-1"></div>
+    <div class="column is-centered is-10 box">
+      <h3 class="title is-3">Registrar Movimento de Estoque</h3>
+
+      <div class="field">
+        <label class="label">Tipo de Movimentação</label>
+        <div class="control">
+          <div class="select is-fullwidth">
+            <select (change)="setTipoMovimento($event)" [(ngModel)]="request.tipoMovimentacao">
+              <option value="entrada">Entrada</option>
+              <option value="saida">Saída</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Produto</label>
+        <div class="control">
+          <div class="select is-fullwidth">
+            <select (change)="setProduto($event)" [(ngModel)]="produtoSelecionado">
+              <option *ngFor="let item of dsProdutos" [value]="item.codigo"> 
+                {{ item.codigo + ' - ' + item.descricao }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <div class="field">
+        <label class="label">Data da Movimentação</label>
+        <div class="control">
+          <input class="input" type="date" (change)="setDataMovimentacao($event)" [(ngModel)]="request.dataMovimentacao">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Quantidade Movimentada</label>
+        <div class="control">
+          <input class="input" type="number" min="0" (change)="setQuantidadeMovimentada($event)" [(ngModel)]="request.quantidadeMovimentada">
+        </div>
+      </div>
+
+      <div class="field" *ngIf="request.tipoMovimentacao === 'saida'">
+        <label class="label">Valor de Venda</label>
+        <div class="control">
+          <input class="input" type="number" (change)="setValorVenda($event)" [(ngModel)]="request.valorVenda">
+        </div>
+      </div>
+      
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-success" (click)="cadastrarMovimento()">Cadastrar</button>
+        </div>
+        <div class="control">
+          <button class="button is-light" (click)="resetarCampos()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+    <div class="column is-1"></div>
+  </div>
+</div>
+
+<!-- Modal de alerta -->
+<div class="modal" id="modal-alerta">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title"> Aviso </p>
+      <button class="delete" aria-label="close" (click)="fecharModal('modal-alerta')"></button>
+    </header>
+
+    <section class="modal-card-body">
+      {{ msgModal }}
+    </section>
+
+    <footer class="modal-card-foot is-justify-content-flex-end">
+      <button class="button is-link" (click)="fecharModal('modal-alerta')">Ok</button>
+    </footer>
+  </div>
+</div>
