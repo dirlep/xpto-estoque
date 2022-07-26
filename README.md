@@ -22,9 +22,9 @@ Depois que as dependências forem baixadas, rodar o projeto clicando com o botã
 
 Dentro da pasta estoque-frontend, abra um terminal e rode o comando npm install. 
 Depois que as dependências forem baixadas, rodar o projeto com `npm start`.
-Abra o navegador e acesse a URL: `http://localhost:4200/`.
+Abra o navegador e acesse a URL: [http://localhost:4200/](http://localhost:4200/)
 
 ## ATENÇÃO! 
 
 Nesse projeto foi utilizado o Lombok para fazer o backend e além da dependência que já está no projeto, é necessário fazer a instalação dele na IDE para o correto funcionamento do projeto. Após a instalação do Lombok é necessário reiniciar a IDE e dar um Maven Update no projeto. 
-Para mais informações sobre como fazer a instalação do Lombok, acesse: `https://projectlombok.org/setup/eclipse`.
+Para mais informações sobre como fazer a instalação do Lombok, acesse: [Projeto Lombok](https://projectlombok.org/setup/eclipse)
